@@ -115,21 +115,6 @@ class SingleTargetDeviationPathAlgorithm(object):
         self._max_consecutive_cycles = max_consecutive_cycles
         self._weight = weight
 
-    @classmethod
-    def create_from_graph(cls, G, target, weight="weight", max_consecutive_cycles=500):
-        """Creates graph and graph_reverse from G with
-        only `weight` attribute.
-        """
-        graph = nx.DiGraph()
-        for src, dst, data in G.edges(data=True):
-            if weight is None:
-                graph.add_edge(src, dst, **{weight: 1.0})
-            else:
-                graph.add_edge(src, dst, **{weight: data[weight]})
-
-        if weight is None:
-            weight = "weight"
-        return cls(graph, target, weight, max_consecutive_cycles)
 
     def _update_sorted_arcs(self, tail_node):
         """Updates _sorted_arcs dict."""
