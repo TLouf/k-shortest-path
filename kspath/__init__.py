@@ -1,3 +1,3 @@
-from mps import SingleTargetDeviationPathAlgorithm
+from .mps import SingleTargetDeviationPathAlgorithm
 
 __all__ = ["SingleTargetDeviationPathAlgorithm"]
