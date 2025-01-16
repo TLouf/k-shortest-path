@@ -20,7 +20,7 @@ setup(
     license="Apache License 2.0",
     packages=find_packages(exclude=["tests"]),
     install_requires=[
-        "networkx>=2.1",
+        "networkx>=3.4.2",
     ],
     url="https://github.com/datagovsg/k-shortest-path",
     classifiers=["Programming Language :: Python :: 3"],
