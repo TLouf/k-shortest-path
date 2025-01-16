@@ -124,9 +124,9 @@ class SingleTargetDeviationPathAlgorithm(object):
         graph = nx.DiGraph()
         for src, dst, data in G.edges(data=True):
             if weight is None:
-                graph.add_edge(src, dst, weight=1.0)
+                graph.add_edge(src, dst, **{weight: 1.0})
             else:
-                graph.add_edge(src, dst, weight=data[weight])
+                graph.add_edge(src, dst, **{weight: data[weight]})
 
         graph_reverse = graph.reverse()
 
@@ -145,7 +145,7 @@ class SingleTargetDeviationPathAlgorithm(object):
                 cost = (
                     self._dist[head_node]
                     - tail_node_to_target_dist
-                    + self.graph[tail_node][head_node]["weight"]
+                    + self.graph[tail_node][head_node][self._weight]
                 )
                 cost_head_node_list.append((cost, head_node))
         cost_head_node_list.sort()
@@ -275,7 +275,7 @@ class SingleTargetDeviationPathAlgorithm(object):
 
             if max_consecutive_cycles_reached:
                 for path in nx.shortest_simple_paths(
-                    self.graph, source, self.target, "weight"
+                    self.graph, source, self.target, self._weight
                 ):
                     if tuple(path) not in simple_paths_found:
                         yield path
