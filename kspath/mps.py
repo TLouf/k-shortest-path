@@ -75,7 +75,7 @@ class SingleTargetDeviationPathAlgorithm(object):
     """
 
     def __init__(
-        self, G, G_reverse, target, weight="weight", max_consecutive_cycles=500
+        self, G: nx.DiGraph, target, weight="weight", max_consecutive_cycles=500
     ):
         """Input Parameters
 
@@ -103,13 +103,12 @@ class SingleTargetDeviationPathAlgorithm(object):
         if target not in G:
             raise nx.NodeNotFound("target node %s not in graph" % target)
 
-        dist, paths = nx.single_source_dijkstra(G_reverse, target)
+        dist, paths = nx.single_source_dijkstra(G.reverse(copy=False), target)
         for node in paths:
             paths[node] = paths[node][::-1]
 
         self.target = target
         self.graph = G
-        self._graph_reverse = G_reverse
         self._dist = dist
         self._paths = paths
         self._sorted_arcs = {}
@@ -128,11 +127,9 @@ class SingleTargetDeviationPathAlgorithm(object):
             else:
                 graph.add_edge(src, dst, **{weight: data[weight]})
 
-        graph_reverse = graph.reverse()
-
         if weight is None:
             weight = "weight"
-        return cls(graph, graph_reverse, target, weight, max_consecutive_cycles)
+        return cls(graph, target, weight, max_consecutive_cycles)
 
     def _update_sorted_arcs(self, tail_node):
         """Updates _sorted_arcs dict."""
@@ -183,7 +180,7 @@ class SingleTargetDeviationPathAlgorithm(object):
             # if there is only one path from deviation node to target node
             no_other_path = True
             for node in path[-1:i:-1]:
-                if len(self._graph_reverse[node]) > 1:
+                if len(self.graph.in_edges[node]) > 1:
                     no_other_path = False
                     break
             if no_other_path:
