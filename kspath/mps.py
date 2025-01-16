@@ -165,7 +165,7 @@ class SingleTargetDeviationPathAlgorithm(object):
             # if there is only one path from deviation node to target node
             no_other_path = True
             for node in path[-1:i:-1]:
-                if len(self.graph.in_edges[node]) > 1:
+                if len(self.graph.in_edges(node)) > 1:
                     no_other_path = False
                     break
             if no_other_path:
