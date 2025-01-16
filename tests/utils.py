@@ -1,7 +1,7 @@
 import networkx as nx
 import numpy as np
 
-from kspath.deviation_path.mps import SingleTargetDeviationPathAlgorithm
+from kspath import SingleTargetDeviationPathAlgorithm
 
 
 def compute_path_weight(G, weight, path):

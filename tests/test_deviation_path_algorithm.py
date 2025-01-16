@@ -1,9 +1,7 @@
 import networkx as nx
 import pytest
 
-from kspath.deviation_path.mps import (
-    SingleTargetDeviationPathAlgorithm
-)
+from kspath import SingleTargetDeviationPathAlgorithm
 from tests.utils import check_dpa_mps_implementation, compute_path_weight
 
 
@@ -36,7 +34,7 @@ def test_source_node_not_found():
     dpa_mps = SingleTargetDeviationPathAlgorithm.create_from_graph(
         G=G, target='d', weight='weight'
     )
-    
+
     with pytest.raises(nx.NodeNotFound):
         dpa_mps.shortest_simple_paths(source='z')
 
